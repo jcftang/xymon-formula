@@ -1,0 +1,10 @@
+apache:
+  modules:
+    enabled:
+      - rewrite
+
+xymon:
+  server: 192.168.251.100
+  adminuser: hobbit
+  adminpassword: hobbit
+    

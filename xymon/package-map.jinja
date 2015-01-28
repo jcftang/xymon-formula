@@ -1,0 +1,32 @@
+{% set package_table = {
+        'Ubuntu':  {'xymon-server': salt['grains.filter_by']({
+                                        '12.04': 'hobbit',
+                                        'default': 'hobbit',
+                                    }, grain='osrelease'),
+                    'xymon-client': 'hobbit-client',
+                    'xymon-plugins': 'hobbit-plugins',
+                    'server-service': 'hobbit',
+                    'client-service': 'hobbit-client',
+                    'client-default-pattern': 'HOBBITSERVERS=',
+                    'client-default-file': 'hobbit-client',
+                    'sysconfig': '/etc/default',
+                    'hosts-file': 'bb-hosts',
+                    'config-path': '/etc/hobbit'},
+        'Debian':  {'xymon-server': 'hobbit',
+                    'xymon-client': 'hobbit-client',
+                    'xymon-plugins': 'hobbit-plugins',
+                    'server-service': 'hobbit',
+                    'client-service': 'hobbit-client',
+                    'client-default-pattern': 'HOBBITSERVERS=',
+                    'client-default-file': 'hobbit-client',
+                    'sysconfig': '/etc/default',
+                    'hosts-file': 'bb-hosts',
+                    'config-path': '/etc/hobbit'}
+    }
+%}
+
+{% if 'package_table' in pillar %}
+    {% set pkgs = pillar['package_table'] %}
+{% elif grains['os'] in package_table %}
+    {% set pkgs = package_table[grains['os']] %}
+{% endif %}
